@@ -1,0 +1,15 @@
+node_modules/
+/dist/
+test-results/
+playwright-report/
+.local/
+.DS_Store
+*.log
+.env
+.env.*
+*.pem
+*.p12
+*.key
+docs/HANDOFF.md
+docs/superpowers/
+/docs/markflow-preview.png

@@ -1,0 +1,80 @@
+{
+  "name": "markflow-desktop",
+  "version": "1.1.0",
+  "description": "A calm, local-first Markdown desktop editor",
+  "author": "Markflow",
+  "private": true,
+  "main": "desktop/main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test test/*.test.cjs",
+    "test:e2e": "playwright test",
+    "build": "electron-builder --mac --dir",
+    "build:dmg": "electron-builder --mac dmg"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "electron": "45.0.0",
+    "electron-builder": "26.18.0",
+    "lucide-static": "^1.62.0"
+  },
+  "build": {
+    "appId": "local.markflow.editor",
+    "productName": "Markflow",
+    "directories": {
+      "output": "dist/release"
+    },
+    "files": [
+      "desktop/**",
+      "renderer/**",
+      "vendor/vditor/dist/**",
+      "package.json",
+      "LICENSE",
+      "THIRD_PARTY_NOTICES.md",
+      "vendor/vditor/LICENSE"
+    ],
+    "mac": {
+      "category": "public.app-category.productivity",
+      "identity": null,
+      "icon": "assets/Markflow.icns",
+      "extendInfo": {
+        "LSApplicationCategoryType": "public.app-category.productivity",
+        "UTExportedTypeDeclarations": [
+          {
+            "UTTypeIdentifier": "net.daringfireball.markdown",
+            "UTTypeDescription": "Markdown document",
+            "UTTypeConformsTo": [
+              "public.plain-text"
+            ],
+            "UTTypeTagSpecification": {
+              "public.filename-extension": [
+                "md",
+                "markdown"
+              ],
+              "public.mime-type": "text/markdown"
+            }
+          }
+        ]
+      }
+    },
+    "fileAssociations": [
+      {
+        "ext": [
+          "md",
+          "markdown"
+        ],
+        "name": "Markdown document",
+        "role": "Editor",
+        "rank": "Owner",
+        "isPackage": false,
+        "mimeType": "text/markdown"
+      }
+    ],
+    "electronDist": "node_modules/electron/dist"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HuiAnnn/markflow.git"
+  }
+}

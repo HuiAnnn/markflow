@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' app:; script-src 'self' app://markflow 'unsafe-eval'; style-src 'self' app: 'unsafe-inline'; img-src 'self' app: data: blob: https: http:; font-src 'self' app: data:; connect-src 'self' app:; object-src 'none'; frame-src 'none'; base-uri app:; form-action 'none'">
+<base href="app://document/">
+<title>Markflow</title>
+<link rel="stylesheet" href="app://markflow/vendor/vditor/dist/index.css">
+<link rel="stylesheet" href="app://markflow/renderer/icons.css">
+<link rel="stylesheet" href="app://markflow/renderer/styles.css">
+</head>
+<body data-theme="light" data-compact="false">
+<header id="titlebar" aria-label="文档工具栏">
+  <div class="leading-tools"><div class="window-spacer" aria-hidden="true"></div><button id="btn-sidebar" class="toolbar-button" aria-label="显示或隐藏侧栏" title="显示或隐藏侧栏 · ⌘⇧2" aria-expanded="true" aria-controls="sidebar"><span class="icon icon-panel-left" aria-hidden="true"></span></button><button id="btn-new" class="toolbar-button" aria-label="新建文稿" title="新建文稿 · ⌘N"><span class="icon icon-square-pen" aria-hidden="true"></span></button></div>
+  <div class="document-title"><span class="icon icon-file-text document-icon" aria-hidden="true"></span><div class="document-labels"><div class="document-name"><span id="filename">未命名.md</span><span id="title-dirty" aria-label="有未保存的修改" hidden></span></div><span id="filepath">Markdown 文稿</span></div></div>
+  <div class="title-actions">
+    <div class="toolbar-group"><button id="btn-open" class="toolbar-button" aria-label="打开文稿" title="打开文稿 · ⌘O"><span class="icon icon-folder-open" aria-hidden="true"></span></button><button id="btn-save" class="toolbar-button" aria-label="保存文稿" title="保存文稿 · ⌘S"><span class="icon icon-save" aria-hidden="true"></span></button></div>
+    <div class="segmented mode-control" role="group" aria-label="编辑模式"><button id="btn-preview" aria-label="即时渲染" aria-pressed="true" title="即时渲染"><span class="icon icon-text-cursor-input" aria-hidden="true"></span><span class="mode-label">编辑</span></button><button id="btn-edit" aria-label="Markdown 源码" aria-pressed="false" title="切换源码 · ⌘E"><span class="icon icon-code-xml" aria-hidden="true"></span><span class="mode-label">源码</span></button></div>
+    <div class="toolbar-group"><button id="btn-export" class="toolbar-button" aria-label="导出文稿" title="导出文稿" aria-haspopup="menu" aria-expanded="false"><span class="icon icon-share" aria-hidden="true"></span></button><button id="btn-more" class="toolbar-button" aria-label="写作选项" title="写作选项" aria-haspopup="menu" aria-expanded="false"><span class="icon icon-ellipsis" aria-hidden="true"></span></button><button id="btn-outline" class="toolbar-button" aria-label="显示或隐藏大纲" title="显示或隐藏大纲 · ⌘⇧1" aria-expanded="true" aria-controls="outline"><span class="icon icon-panel-right" aria-hidden="true"></span></button></div>
+  </div>
+</header>
+<div id="main">
+  <aside id="sidebar" aria-label="文稿侧栏">
+    <div class="sidebar-title"><h2>文稿</h2><button id="btn-folder" class="small-button" aria-label="打开文件夹" title="打开文件夹 · ⌘⇧O"><span class="icon icon-folder-plus" aria-hidden="true"></span></button></div>
+    <div class="segmented sidebar-tabs" role="tablist" aria-label="侧栏内容"><button id="files-tab" data-tab="files" role="tab" aria-selected="true" aria-controls="files-panel" tabindex="0">文件</button><button id="search-tab" data-tab="search" role="tab" aria-selected="false" aria-controls="search-panel" tabindex="-1">搜索</button></div>
+    <section id="files-panel" class="sidebar-panel" role="tabpanel" aria-labelledby="files-tab">
+      <div class="section-heading"><span id="folder-name">最近打开</span><button id="btn-refresh" class="small-button" aria-label="刷新文件列表" title="刷新文件列表"><span class="icon icon-refresh-cw" aria-hidden="true"></span></button></div>
+      <div id="file-list"></div>
+      <div class="empty-state" id="workspace-note"><span class="icon icon-folder-open" aria-hidden="true"></span><h3>你的文稿，在这里</h3><p>打开文件夹，浏览和搜索<br>其中的 Markdown 文稿。</p><button id="empty-open-folder" class="standard-button">打开文件夹…</button><button id="empty-open-file" class="text-button">打开单个文稿</button></div>
+    </section>
+    <section id="search-panel" class="sidebar-panel" role="tabpanel" aria-labelledby="search-tab" hidden><label class="sr-only" for="search-input">搜索文件夹中的文稿</label><div class="search-field"><span class="icon icon-search" aria-hidden="true"></span><input id="search-input" type="search" placeholder="搜索文稿内容" autocomplete="off" spellcheck="false"></div><p id="search-status" role="status">打开文件夹后开始搜索</p><button id="search-open-folder" class="standard-button">打开文件夹…</button><div id="search-results"></div></section>
+    <div class="sidebar-bottom"><button id="btn-appearance" class="appearance-button" aria-label="选择外观" aria-haspopup="menu" aria-expanded="false"><span class="icon icon-circle-gauge" aria-hidden="true"></span><span id="appearance-name">跟随系统</span><span class="icon icon-chevrons-up-down" aria-hidden="true"></span></button><button id="btn-settings" class="small-button" title="设置 · ⌘," aria-label="设置"><span class="icon icon-settings-2" aria-hidden="true"></span></button></div>
+  </aside>
+  <div id="sidebar-divider" role="separator" aria-label="调整侧栏宽度" aria-orientation="vertical" aria-valuemin="200" aria-valuemax="340" aria-valuenow="248" tabindex="0"></div>
+  <main id="editor-host" aria-label="文稿编辑区"><div id="editor"></div><button id="exit-focus" class="standard-button" hidden><span class="icon icon-minimize-2" aria-hidden="true"></span>退出专注 <kbd>Esc</kbd></button></main>
+  <aside id="outline" aria-label="文稿大纲"><div class="inspector-title"><h2>大纲</h2><button id="btn-close-outline" class="small-button" aria-label="关闭大纲"><span class="icon icon-x" aria-hidden="true"></span></button></div><ul id="outline-list"></ul><div id="outline-empty" class="empty-state"><span class="icon icon-list-tree" aria-hidden="true"></span><h3>尚无标题</h3><p>输入 # 和空格添加标题，<br>在这里快速跳转。</p></div><div class="inspector-footer"><span class="icon icon-text-cursor-input" aria-hidden="true"></span><span>⌘E 切换源码与即时渲染</span></div></aside>
+</div>
+<footer id="statusbar" aria-label="文稿状态"><div class="status-left"><span id="save-status-icon" class="icon icon-check" aria-hidden="true"></span><span id="st-save">已就绪</span><span class="status-separator" aria-hidden="true"></span><span id="st-mode">即时渲染</span><span id="st-position"></span></div><div class="status-right"><span id="st-dirty" hidden>未保存</span><span id="st-words">0 字</span><span id="st-lines">0 行</span><span id="st-reading">约 1 分钟阅读</span><span class="encoding">UTF-8</span></div></footer>
+<dialog id="settings-dialog" aria-labelledby="settings-title"><form method="dialog"><header class="settings-header"><div><h2 id="settings-title">设置</h2><p>按你的习惯，调整写作空间。</p></div><button class="small-button" aria-label="关闭设置" value="close"><span class="icon icon-x" aria-hidden="true"></span></button></header></form><div class="settings-body"><section><h3>外观</h3><div class="settings-row"><label for="theme-select">应用外观<span>默认跟随 macOS 的深浅色设置</span></label><select id="theme-select"><option value="system">跟随系统</option><option value="light">浅色</option><option value="dark">深色</option><option value="sepia">暖纸</option></select></div></section><section><h3>编辑</h3><div class="settings-row"><label for="autosave">自动保存<span>停止输入 1.2 秒后保存。未命名文稿需先保存一次。</span></label><input id="autosave" type="checkbox" role="switch"></div><div class="settings-row"><label for="setting-typewriter">打字机模式<span>让正在编辑的段落保持在视图中间</span></label><input id="setting-typewriter" type="checkbox" role="switch"></div></section><section><h3>文稿</h3><p class="settings-note">文件保存在你选择的本地位置。Markflow 不上传文稿，也不收集使用数据。</p><p class="settings-note">HTML 和 PDF 可直接导出。Word 文稿需要安装 Pandoc。</p></section></div><form method="dialog" class="settings-footer"><span>Markflow <span id="app-version">1.1.0</span></span><button class="primary-button" value="done">完成</button></form></dialog>
+<div id="notice" role="status" aria-live="polite" hidden><span class="icon icon-circle-check" id="notice-icon" aria-hidden="true"></span><span id="notice-message"></span><button id="notice-close" class="small-button" aria-label="关闭提示"><span class="icon icon-x" aria-hidden="true"></span></button></div>
+<script src="app://markflow/vendor/vditor/dist/index.min.js"></script>
+<script src="app://markflow/renderer/history.js"></script>
+<script src="app://markflow/renderer/app.js"></script>
+</body>
+</html>
